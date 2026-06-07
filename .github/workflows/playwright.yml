@@ -30,8 +30,8 @@ jobs:
       run: |
         if ("${{ github.event.inputs.environment }}" -eq "qa") {
           $content = Get-Content -Path qa.env -Raw
-          $content = $content -replace "#replace_qa_username#", "${{ secrets.STANDARD_USER_NAME_QA }}"
-          $content = $content -replace "#replace_qa_password#", "${{ secrets.STANDARD_USER_PSW_QA }}"
+          $content = $content -replace "#replace_qa_username#", "${{ secrets.SAUCEDEMO_USERNAME_QA }}"
+          $content = $content -replace "#replace_qa_password#", "${{ secrets.SAUCEDEMO_PASSWORD_QA }}"
           Set-Content -Path qa.env -Value $content
           echo "ENV_FILE=qa.env" | Out-File -FilePath .env -Encoding utf8
           echo "runsettings=${env:GITHUB_WORKSPACE}/qa.env" >> $env:GITHUB_OUTPUT
