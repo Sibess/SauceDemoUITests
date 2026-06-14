@@ -1,6 +1,6 @@
 import { test } from '@playwright/test';
 import { LoginPage } from '../../pages/authentication/Login';
-import { InventoryPage } from '../../pages/inventory/Inventory';
+import { InventoryPage } from '../../pages/shop/Inventory';
 
 test.describe('Login page Tests', () => {
   let loginPage: LoginPage;
@@ -10,12 +10,10 @@ test.describe('Login page Tests', () => {
     loginPage = new LoginPage(page);
     inventoryPage = new InventoryPage(page);
     await loginPage.goToBaseURL();
-    await loginPage.login(process.env.SAUCEDEMO_USERNAME!, process.env.SAUCEDEMO_PASSWORD!);
   });
 
-  test('should add item to cart', async ({ page }) => {
+  test('should login successfully', async ({ page }) => {
+    await loginPage.login(process.env.SAUCEDEMO_USERNAME!, process.env.SAUCEDEMO_PASSWORD!);
     await inventoryPage.assertLoggedIn();
-    await inventoryPage.addItemToCartByName('Sauce Labs Backpack');
-    await inventoryPage.openCart();
   });
 });
