@@ -11,4 +11,5 @@ export class CheckoutStepTwoPage {
 
   async finishOrder() {
     await this.finishButton.click();
-  }}
+  }
+}

@@ -9,11 +9,10 @@ import { CheckoutCompletePage } from '../../pages/shop/CheckoutComplete';
 test.describe('Shop module Tests', () => {
   let loginPage: LoginPage;
   let inventoryPage: InventoryPage;
-    let cartPage: CartPage;
-    let checkoutStepOnePage: CheckoutStepOnePage;
-        let checkoutStepTwoPage: CheckoutStepTwoPage;
-let checkoutCompletePage: CheckoutCompletePage;
-        
+  let cartPage: CartPage;
+  let checkoutStepOnePage: CheckoutStepOnePage;
+  let checkoutStepTwoPage: CheckoutStepTwoPage;
+  let checkoutCompletePage: CheckoutCompletePage;
 
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
@@ -29,13 +28,12 @@ let checkoutCompletePage: CheckoutCompletePage;
 
   test('should buy first item', async ({ page }) => {
     await inventoryPage.assertLoggedIn();
-    await inventoryPage.addFirstItemToCart(); 
+    await inventoryPage.addFirstItemToCart();
     await inventoryPage.openCart();
     await cartPage.goToCheckout();
-    await checkoutStepOnePage.fillCustomerInfo('test', 'test', '123')
+    await checkoutStepOnePage.fillCustomerInfo('test', 'test', '123');
     await checkoutStepOnePage.continueCheckout();
     await checkoutStepTwoPage.finishOrder();
     await checkoutCompletePage.assertOrderSuccessful();
-
   });
 });
