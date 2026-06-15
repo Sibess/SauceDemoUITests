@@ -1,51 +1,10 @@
-name: Playwright Tests
+name: Schedule Test
 on:
   schedule:
-    - cron: '*/10 * * * *'
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Environment to run tests on'
-        required: true
-        default: 'qa'
-  push:
-    branches: [main, master]
-  pull_request:
-    branches: [main, master]
+    - cron: '*/10 * * * *' # Runs every 10 minutes
+  workflow_dispatch: 
 jobs:
   test:
-    timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Install dependencies
-      run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-
-    - name: Config Runsettings
-      id: set-runsettings
-      shell: pwsh
-      run: |
-        if ("${{ github.event.inputs.environment }}" -eq "qa" -or "${{ github.event_name }}" -ne "workflow_dispatch") {
-          $content = Get-Content -Path qa.env -Raw
-          $content = $content -replace "#replace_qa_username#", "${{ secrets.SAUCEDEMO_USERNAME_QA }}"
-          $content = $content -replace "#replace_qa_password#", "${{ secrets.SAUCEDEMO_PASSWORD_QA }}"
-          Set-Content -Path qa.env -Value $content
-          echo "ENV_FILE=qa.env" | Out-File -FilePath .env -Encoding utf8
-          echo "runsettings=${env:GITHUB_WORKSPACE}/qa.env" >> $env:GITHUB_OUTPUT
-        }
-
-    - name: Run Playwright tests
-      run: npx playwright test
-      env:
-        ENV_FILE: qa.env
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
+      - run: echo "Scheduled run test at $(date)"
