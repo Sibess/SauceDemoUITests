@@ -1,15 +1,17 @@
 name: Playwright Tests
 on:
+  schedule:
+    - cron: '0 19 * * *'
   workflow_dispatch:
     inputs:
       environment:
         description: 'Environment to run tests on'
         required: true
         default: 'qa'
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
+  # push:
+  #   branches: [ main, master ]
+  # pull_request:
+  #   branches: [ main, master ]
 jobs:
   test:
     timeout-minutes: 60
